@@ -8,13 +8,11 @@
 
 ## Model
 
-<!-- TODO: exact model tag (from `ollama list`) and a link to its license/terms -->
-
 | | |
 |---|---|
-| Model | `gemma3:4b` (TODO: confirm) |
-| Served via | [Ollama](https://ollama.com) |
-| License / terms | TODO: link |
+| Model | `llama3.1-8b` (Meta Llama 3.1, 8B parameters, open weights) |
+| Served via | [Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql) `COMPLETE`, temperature 0 |
+| License / terms | [Llama 3.1 Community License](https://www.llama.com/llama3_1/license/) |
 
 ## Dataset
 
@@ -26,7 +24,7 @@
 
 ## Key dependencies
 
-- Backend: Python 3.11+, FastAPI, snowflake-connector-python, ollama, sqlglot
+- Backend: Python 3.11+, FastAPI, snowflake-connector-python, sqlglot
 - Frontend: React, Vite, Tailwind CSS, Recharts
 
 ## Repo layout
@@ -43,15 +41,15 @@ SMALLSQL.md  full project spec, including the API contract (Section 5)
 ### 1. Environment
 
 ```bash
-cp .env.example .env   # fill in Snowflake credentials and the model tag
+cp .env.example .env   # fill in Snowflake credentials
 ```
 
 ### 2. Model
 
-```bash
-# install Ollama from https://ollama.com, then:
-ollama pull gemma3:4b
-ollama list            # confirm the exact tag and put it in .env
+Nothing to install: the model runs on Snowflake Cortex. Check it answers in your account:
+
+```sql
+SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-8b', 'Reply with the single word OK');
 ```
 
 ### 3. Backend

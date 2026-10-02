@@ -51,8 +51,8 @@ Uses open AI as a core part of how it works, solves a clear problem, shows subst
 | Decision | Choice |
 |---|---|
 | Dataset | `SNOWFLAKE_SAMPLE_DATA.TPCH_SF1` (customers, orders, lineitem, supplier, part, nation, region). Free in Snowflake trial accounts. |
-| Model | A Gemma model at 10B parameters or fewer, served locally via **Ollama**. Default: `gemma3:4b`. Verify the exact tag with `ollama list`. Keep it in one config value. |
-| Backend | Python 3.11+, **FastAPI**, `snowflake-connector-python`, `ollama`, `sqlglot` |
+| Model | An open-weight model at 10B parameters or fewer, hosted on **Snowflake Cortex** so calls run in parallel. Default: `llama3.1-8b`. Keep it in one config value (`CORTEX_MODEL`). |
+| Backend | Python 3.11+, **FastAPI**, `snowflake-connector-python`, `sqlglot` |
 | Frontend | **React + Vite + Tailwind + Recharts** |
 | License | MIT |
 | Safety | SQL is **read-only**. Only a single `SELECT` statement is ever executed. |
@@ -66,7 +66,7 @@ The bare mode must receive the **same schema text** in its prompt as the harness
 ## 4. Architecture
 
 ```
-React UI  --HTTP/JSON-->  FastAPI  --> Ollama (Gemma, local)
+React UI  --HTTP/JSON-->  FastAPI  --> Snowflake Cortex (llama3.1-8b)
                              |
                              +-----> Snowflake (read-only role, TPCH_SF1)
 ```
@@ -142,7 +142,7 @@ Serves cached results from `results.json`. The demo must never depend on a live 
 ```json
 {
   "generated_at": "2026-10-02T12:00:00Z",
-  "model": "gemma3:4b",
+  "model": "llama3.1-8b",
   "dataset": "SNOWFLAKE_SAMPLE_DATA.TPCH_SF1",
   "modes": [
     {
@@ -222,7 +222,7 @@ smallsql/
 - List of key dependencies
 - How CoCo was used, with screenshots as proof
 - Which Snowflake dataset was used and that it is freely accessible
-- Setup and run instructions (Ollama, Snowflake env vars, backend, frontend)
+- Setup and run instructions (Snowflake env vars, backend, frontend)
 - Honest limitations (benchmark size, small model, TPCH only)
 - MIT license notice
 
@@ -260,5 +260,5 @@ These can't be done by Claude Code and need a person:
 - Create or confirm the Snowflake trial account and read-only role, and verify `TPCH_SF1` is visible
 - Use **CoCo** in Snowflake to explore the dataset and draft benchmark questions, then **screenshot it** for proof
 - Hand-verify every gold SQL query
-- Install Ollama, pull the model, and confirm the exact tag
+- Confirm the Cortex model is available in the account's region
 - Record the demo video and submit the project

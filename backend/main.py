@@ -24,7 +24,7 @@ app.add_middleware(
 
 @app.get("/api/health")
 def health() -> dict:
-    return {"status": "ok", "model": config.OLLAMA_MODEL, "dataset": config.DATASET}
+    return {"status": "ok", "model": config.CORTEX_MODEL, "dataset": config.DATASET}
 
 
 @app.post("/api/ask", response_model=AskResponse)
