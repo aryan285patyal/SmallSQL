@@ -25,6 +25,12 @@ export async function ask(question, mode) {
   return request('/api/ask', { method: 'POST', body: JSON.stringify({ question, mode }) })
 }
 
+/** GET /api/health -> { status, model, dataset } */
+export async function getHealth() {
+  if (USE_MOCKS) return { status: 'mock', model: evalLatest.model, dataset: evalLatest.dataset }
+  return request('/api/health')
+}
+
 /** POST /api/eval/run -> { status: "started" } */
 export async function runEval() {
   if (USE_MOCKS) return { status: 'started' }
