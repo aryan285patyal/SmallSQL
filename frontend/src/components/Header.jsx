@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getHealth } from '../api/client.js'
 import { BANNER } from '../banner.js'
+import ThemeToggle from './ThemeToggle.jsx'
 
 const API_STATE = {
   ok: { dot: 'text-accent glow', label: 'api online' },
-  mock: { dot: 'text-[#d6c08f]', label: 'mock data' },
+  mock: { dot: 'text-note', label: 'mock data' },
   down: { dot: 'text-err glow-err', label: 'api offline' },
 }
 
-export default function Header({ tab, tabs, onTab }) {
+export default function Header({ tab, tabs, onTab, theme, onToggleTheme }) {
   const [health, setHealth] = useState(null)
 
   useEffect(() => {
@@ -44,23 +45,28 @@ export default function Header({ tab, tabs, onTab }) {
         </dl>
       </div>
 
-      <nav className="mt-6 flex gap-1 border-b border-line text-[12px]" aria-label="pages">
-        {Object.entries(tabs).map(([key, label], i) => {
-          const active = tab === key
-          return (
-            <button
-              key={key}
-              onClick={() => onTab(key)}
-              aria-current={active ? 'page' : undefined}
-              className={`-mb-px border-b-2 px-3 py-2 tracking-[0.15em] uppercase transition-colors ${
-                active ? 'border-accent text-accent glow' : 'border-transparent text-dim hover:text-fg'
-              }`}
-            >
-              <span className="text-faint">[{i + 1}]</span> {label}
-            </button>
-          )
-        })}
-      </nav>
+      <div className="mt-6 flex items-end justify-between gap-4 border-b border-line">
+        <nav className="flex gap-1 text-[12px]" aria-label="pages">
+          {Object.entries(tabs).map(([key, label], i) => {
+            const active = tab === key
+            return (
+              <button
+                key={key}
+                onClick={() => onTab(key)}
+                aria-current={active ? 'page' : undefined}
+                className={`-mb-px border-b-2 px-3 py-2 tracking-[0.15em] uppercase transition-colors ${
+                  active ? 'border-accent text-accent glow' : 'border-transparent text-dim hover:text-fg'
+                }`}
+              >
+                <span className={active ? 'text-accent/60' : 'text-dim/70'}>[{i + 1}]</span> {label}
+              </button>
+            )
+          })}
+        </nav>
+        <div className="pb-1.5">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        </div>
+      </div>
     </header>
   )
 }

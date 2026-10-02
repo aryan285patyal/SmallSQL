@@ -16,10 +16,10 @@ export function highlightSql(sql) {
     const [text, comment, string, number, word, call] = m
     const key = m.index
     if (comment) out.push(<span key={key} className="text-faint italic">{text}</span>)
-    else if (string) out.push(<span key={key} className="text-[#d6c08f]">{text}</span>)
-    else if (number) out.push(<span key={key} className="text-[#f0c674]">{text}</span>)
+    else if (string) out.push(<span key={key} className="text-sql-string">{text}</span>)
+    else if (number) out.push(<span key={key} className="text-sql-number">{text}</span>)
     else if (KEYWORDS.has(word.toUpperCase())) out.push(<span key={key} className="font-semibold text-accent">{text}</span>)
-    else if (call) out.push(<span key={key}><span className="text-[#ffd27a]">{word}</span>{call}</span>)
+    else if (call) out.push(<span key={key}><span className="text-sql-fn">{word}</span>{call}</span>)
     else out.push(<span key={key} className="text-fg">{text}</span>)
     last = TOKEN.lastIndex
   }

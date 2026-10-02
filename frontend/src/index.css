@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 /* ── Theme tokens ─────────────────────────────────────────────
-   Amber phosphor terminal. Change --color-accent to re-skin. */
+   Dark: amber phosphor CRT (default). Light: amber ink on paper.
+   Utilities like text-accent / bg-panel read these variables, so
+   switching data-theme on <html> re-skins the whole app. */
 @theme {
   --color-bg: #0c0a07;
   --color-panel: #12100b;
@@ -13,6 +15,10 @@
   --color-accent-soft: #ffb00026;
   --color-err: #ff5f45;
   --color-err-soft: #ff5f4522;
+  --color-note: #d6c08f;
+  --color-sql-string: #d6c08f;
+  --color-sql-number: #f0c674;
+  --color-sql-fn: #ffd27a;
 
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --font-display: "VT323", "IBM Plex Mono", monospace;
@@ -34,17 +40,43 @@
   }
 }
 
+/* Non-color theme values (glow, scanlines) */
+:root {
+  --glow-accent: 0 0 6px rgb(255 176 0 / 0.45), 0 0 18px rgb(255 176 0 / 0.15);
+  --glow-err: 0 0 6px rgb(255 95 69 / 0.4);
+  --scanline: rgb(0 0 0 / 0.18);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #f2ebdb;
+  --color-panel: #faf6ec;
+  --color-fg: #231d14;
+  --color-dim: #6b5f4b;
+  --color-faint: #9c8f76;
+  --color-line: #d8ccb3;
+  --color-accent: #9a5800;
+  --color-accent-soft: #c9860a1f;
+  --color-err: #b8321b;
+  --color-err-soft: #b8321b14;
+  --color-note: #7a5a1e;
+  --color-sql-string: #7a5a1e;
+  --color-sql-number: #8f4a00;
+  --color-sql-fn: #6e3f00;
+
+  /* ink doesn't glow; a hint of bleed keeps the printed feel */
+  --glow-accent: 0 0 0.5px rgb(154 88 0 / 0.5);
+  --glow-err: none;
+  --scanline: rgb(60 40 10 / 0.035);
+  color-scheme: light;
+}
+
 @layer base {
-  html {
-    color-scheme: dark;
-  }
   body {
     @apply bg-bg font-mono text-fg antialiased;
     font-size: 14px;
-    /* warm vignette, like an old CRT */
-    background-image: radial-gradient(ellipse at 50% 0%, #1d170c 0%, transparent 65%);
-    background-attachment: fixed;
     min-height: 100vh;
+    transition: background-color 250ms ease, color 250ms ease;
   }
   ::selection {
     @apply bg-accent text-bg;
@@ -62,18 +94,18 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 50;
-  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.18) 2px 3px);
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, var(--scanline) 2px 3px);
 }
 
 @utility glow {
-  text-shadow: 0 0 6px rgb(255 176 0 / 0.45), 0 0 18px rgb(255 176 0 / 0.15);
+  text-shadow: var(--glow-accent);
 }
 
 @utility glow-err {
-  text-shadow: 0 0 6px rgb(255 95 69 / 0.4);
+  text-shadow: var(--glow-err);
 }
 
-/* Thin amber scrollbars to match the theme */
+/* Thin scrollbars to match the theme */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-faint) transparent;

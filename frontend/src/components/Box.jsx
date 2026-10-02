@@ -2,7 +2,7 @@
 //   ┌─ TITLE ───────────── right ─┐
 export default function Box({ title, right, className = '', children }) {
   return (
-    <section className={`relative border border-line bg-panel/60 px-4 pb-4 pt-5 ${className}`}>
+    <section className={`relative border border-line bg-panel/85 backdrop-blur-[2px] px-4 pb-4 pt-5 ${className}`}>
       <Corners />
       {title && (
         <h2 className="absolute -top-[0.7em] left-3 bg-bg px-1.5 text-xs font-semibold tracking-[0.2em] text-accent uppercase">

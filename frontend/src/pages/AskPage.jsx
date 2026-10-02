@@ -62,7 +62,7 @@ export default function AskPage() {
           e.preventDefault()
           run()
         }}
-        className="group flex items-center gap-3 border border-line bg-panel/60 px-4 py-3 transition-colors focus-within:border-accent/60"
+        className="group flex items-center gap-3 border border-line bg-panel/90 px-4 py-3 transition-colors focus-within:border-accent/60"
       >
         <span className="text-accent glow select-none" aria-hidden>
           sql&gt;
@@ -86,7 +86,7 @@ export default function AskPage() {
       </form>
 
       <div className="flex flex-wrap items-center gap-2 text-[12px]">
-        <span className="text-faint">try:</span>
+        <span className="text-dim">try:</span>
         {EXAMPLES.map(({ label, question: q }) => (
           <button
             key={label}
