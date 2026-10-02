@@ -46,9 +46,10 @@ cp .env.example .env   # fill in Snowflake credentials
 
 ### 2. Model
 
-Nothing to install: the model runs on Snowflake Cortex. Check it answers in your account:
+Nothing to install: the model runs on Snowflake Cortex. The role in `.env` needs Cortex access; then check the model answers in your account:
 
 ```sql
+GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE <your_role>;
 SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-8b', 'Reply with the single word OK');
 ```
 
