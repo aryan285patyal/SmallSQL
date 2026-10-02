@@ -29,6 +29,7 @@ Schema:
 {schema}
 
 {notes}
+Do not return the previous SQL again: change the part the error describes.
 Return a corrected single SELECT statement. Return only the SQL.
 """
 

@@ -1,0 +1,531 @@
+{
+  "generated_at": "2026-10-02T21:12:27Z",
+  "model": "llama3.1-8b",
+  "dataset": "SNOWFLAKE_SAMPLE_DATA.TPCH_SF1",
+  "modes": [
+    {
+      "name": "bare",
+      "accuracy": 0.72,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment? Return the market segment and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "What is the average account balance of all suppliers?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "How many line items were shipped with each ship mode? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "How many orders are there for each order priority? Return the order priority and the number of orders.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "How many parts have a size greater than 40?",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "What is the highest retail price of any part?",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "How many urgent orders (priority 1-URGENT) were placed in 1997?",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "How many customers are in each nation? Return the nation name and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "How many nations are in each region? Return the region name and the number of nations.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Which 5 customers spent the most in total? Return the customer name and their total spend, highest first.",
+          "passed": false
+        },
+        {
+          "id": "q12",
+          "question": "What is the total order value for each customer market segment? Return the market segment and the sum of order total prices.",
+          "passed": false
+        },
+        {
+          "id": "q13",
+          "question": "How many orders were placed by customers in the BUILDING market segment?",
+          "passed": false
+        },
+        {
+          "id": "q14",
+          "question": "What is the total revenue for each ship year? Return the year of the ship date and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "How many distinct customers placed at least one order in 1996?",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "What is the total revenue per region, based on the region of the customer? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "How many suppliers are in each region? Return the region name and the number of suppliers.",
+          "passed": false
+        },
+        {
+          "id": "q18",
+          "question": "Which 3 nations have customers who placed the most orders? Return the nation name and the number of orders, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "What is the average order total price for customers in each region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "q20",
+          "question": "How many returned line items (return flag R) are there for each customer market segment? Return the market segment and the number of line items.",
+          "passed": false
+        },
+        {
+          "id": "q21",
+          "question": "What is the total revenue from parts of each manufacturer? Return the manufacturer and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "q22",
+          "question": "Which 5 suppliers generated the most revenue? Return the supplier name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "q23",
+          "question": "What is the total revenue from orders placed in 1996 by customers in each nation of the ASIA region? Return the nation name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q24",
+          "question": "For each ship mode, how many line items were received later than their commit date? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q25",
+          "question": "What is the average supply cost of the parts supplied by suppliers in each region? Return the region name and the average supply cost.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+schema_grounding",
+      "accuracy": 0.92,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment? Return the market segment and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "What is the average account balance of all suppliers?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "How many line items were shipped with each ship mode? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "How many orders are there for each order priority? Return the order priority and the number of orders.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "How many parts have a size greater than 40?",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "What is the highest retail price of any part?",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "How many urgent orders (priority 1-URGENT) were placed in 1997?",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "How many customers are in each nation? Return the nation name and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "How many nations are in each region? Return the region name and the number of nations.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Which 5 customers spent the most in total? Return the customer name and their total spend, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "What is the total order value for each customer market segment? Return the market segment and the sum of order total prices.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "How many orders were placed by customers in the BUILDING market segment?",
+          "passed": true
+        },
+        {
+          "id": "q14",
+          "question": "What is the total revenue for each ship year? Return the year of the ship date and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "How many distinct customers placed at least one order in 1996?",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "What is the total revenue per region, based on the region of the customer? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "How many suppliers are in each region? Return the region name and the number of suppliers.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Which 3 nations have customers who placed the most orders? Return the nation name and the number of orders, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "What is the average order total price for customers in each region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "q20",
+          "question": "How many returned line items (return flag R) are there for each customer market segment? Return the market segment and the number of line items.",
+          "passed": false
+        },
+        {
+          "id": "q21",
+          "question": "What is the total revenue from parts of each manufacturer? Return the manufacturer and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q22",
+          "question": "Which 5 suppliers generated the most revenue? Return the supplier name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "q23",
+          "question": "What is the total revenue from orders placed in 1996 by customers in each nation of the ASIA region? Return the nation name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q24",
+          "question": "For each ship mode, how many line items were received later than their commit date? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q25",
+          "question": "What is the average supply cost of the parts supplied by suppliers in each region? Return the region name and the average supply cost.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+validation",
+      "accuracy": 0.96,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment? Return the market segment and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "What is the average account balance of all suppliers?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "How many line items were shipped with each ship mode? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "How many orders are there for each order priority? Return the order priority and the number of orders.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "How many parts have a size greater than 40?",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "What is the highest retail price of any part?",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "How many urgent orders (priority 1-URGENT) were placed in 1997?",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "How many customers are in each nation? Return the nation name and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "How many nations are in each region? Return the region name and the number of nations.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Which 5 customers spent the most in total? Return the customer name and their total spend, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "What is the total order value for each customer market segment? Return the market segment and the sum of order total prices.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "How many orders were placed by customers in the BUILDING market segment?",
+          "passed": true
+        },
+        {
+          "id": "q14",
+          "question": "What is the total revenue for each ship year? Return the year of the ship date and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "How many distinct customers placed at least one order in 1996?",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "What is the total revenue per region, based on the region of the customer? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "How many suppliers are in each region? Return the region name and the number of suppliers.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Which 3 nations have customers who placed the most orders? Return the nation name and the number of orders, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "What is the average order total price for customers in each region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "q20",
+          "question": "How many returned line items (return flag R) are there for each customer market segment? Return the market segment and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q21",
+          "question": "What is the total revenue from parts of each manufacturer? Return the manufacturer and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q22",
+          "question": "Which 5 suppliers generated the most revenue? Return the supplier name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "q23",
+          "question": "What is the total revenue from orders placed in 1996 by customers in each nation of the ASIA region? Return the nation name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q24",
+          "question": "For each ship mode, how many line items were received later than their commit date? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q25",
+          "question": "What is the average supply cost of the parts supplied by suppliers in each region? Return the region name and the average supply cost.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+retry",
+      "accuracy": 0.96,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment? Return the market segment and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "What is the average account balance of all suppliers?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "How many line items were shipped with each ship mode? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "How many orders are there for each order priority? Return the order priority and the number of orders.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "How many parts have a size greater than 40?",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "What is the highest retail price of any part?",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "How many urgent orders (priority 1-URGENT) were placed in 1997?",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "How many customers are in each nation? Return the nation name and the number of customers.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "How many nations are in each region? Return the region name and the number of nations.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Which 5 customers spent the most in total? Return the customer name and their total spend, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "What is the total order value for each customer market segment? Return the market segment and the sum of order total prices.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "How many orders were placed by customers in the BUILDING market segment?",
+          "passed": true
+        },
+        {
+          "id": "q14",
+          "question": "What is the total revenue for each ship year? Return the year of the ship date and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "How many distinct customers placed at least one order in 1996?",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "What is the total revenue per region, based on the region of the customer? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "How many suppliers are in each region? Return the region name and the number of suppliers.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Which 3 nations have customers who placed the most orders? Return the nation name and the number of orders, highest first.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "What is the average order total price for customers in each region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "q20",
+          "question": "How many returned line items (return flag R) are there for each customer market segment? Return the market segment and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q21",
+          "question": "What is the total revenue from parts of each manufacturer? Return the manufacturer and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q22",
+          "question": "Which 5 suppliers generated the most revenue? Return the supplier name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "q23",
+          "question": "What is the total revenue from orders placed in 1996 by customers in each nation of the ASIA region? Return the nation name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "q24",
+          "question": "For each ship mode, how many line items were received later than their commit date? Return the ship mode and the number of line items.",
+          "passed": true
+        },
+        {
+          "id": "q25",
+          "question": "What is the average supply cost of the parts supplied by suppliers in each region? Return the region name and the average supply cost.",
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

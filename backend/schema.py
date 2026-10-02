@@ -19,15 +19,26 @@ _SAMPLE_COLUMNS = {
     "NATION": ["N_NAME"],
 }
 
-_JOIN_KEYS = """Join keys:
-- ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY
-- LINEITEM.L_ORDERKEY = ORDERS.O_ORDERKEY
-- LINEITEM.L_PARTKEY = PART.P_PARTKEY
-- LINEITEM.L_SUPPKEY = SUPPLIER.S_SUPPKEY
-- PARTSUPP.PS_PARTKEY = PART.P_PARTKEY and PARTSUPP.PS_SUPPKEY = SUPPLIER.S_SUPPKEY
-- CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY
-- SUPPLIER.S_NATIONKEY = NATION.N_NATIONKEY
-- NATION.N_REGIONKEY = REGION.R_REGIONKEY"""
+# Key pairs that may be joined. The validator rejects any other key-to-key join.
+JOIN_KEYS = [
+    ("ORDERS.O_CUSTKEY", "CUSTOMER.C_CUSTKEY"),
+    ("LINEITEM.L_ORDERKEY", "ORDERS.O_ORDERKEY"),
+    ("LINEITEM.L_PARTKEY", "PART.P_PARTKEY"),
+    ("LINEITEM.L_SUPPKEY", "SUPPLIER.S_SUPPKEY"),
+    ("PARTSUPP.PS_PARTKEY", "PART.P_PARTKEY"),
+    ("PARTSUPP.PS_SUPPKEY", "SUPPLIER.S_SUPPKEY"),
+    ("LINEITEM.L_PARTKEY", "PARTSUPP.PS_PARTKEY"),
+    ("LINEITEM.L_SUPPKEY", "PARTSUPP.PS_SUPPKEY"),
+    ("CUSTOMER.C_NATIONKEY", "NATION.N_NATIONKEY"),
+    ("SUPPLIER.S_NATIONKEY", "NATION.N_NATIONKEY"),
+    ("CUSTOMER.C_NATIONKEY", "SUPPLIER.S_NATIONKEY"),
+    ("NATION.N_REGIONKEY", "REGION.R_REGIONKEY"),
+]
+
+# Two-column keys: both pairs must appear together.
+COMPOSITE_KEYS = [
+    (("LINEITEM.L_PARTKEY", "PARTSUPP.PS_PARTKEY"), ("LINEITEM.L_SUPPKEY", "PARTSUPP.PS_SUPPKEY")),
+]
 
 _RULES = """Rules:
 - Use only the tables and columns listed above. Never invent a column.
@@ -87,4 +98,5 @@ def get_schema_text() -> str:
 def get_grounding_notes() -> str:
     """What the harness adds on top of the schema text: join keys, sample values and dialect rules."""
     samples = "\n".join(f"- {column}: {', '.join(values)}" for column, values in load()["samples"].items())
-    return f"{_JOIN_KEYS}\n\nSample values:\n{samples}\n\n{_RULES}\n"
+    join_keys = "\n".join(f"- {left} = {right}" for left, right in JOIN_KEYS)
+    return f"Join keys:\n{join_keys}\n\nSample values:\n{samples}\n\n{_RULES}\n"

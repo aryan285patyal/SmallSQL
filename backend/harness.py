@@ -47,9 +47,38 @@ def validate_sql(sql: str) -> str | None:
             continue
         table = aliases.get(qualifier)
         if table and name not in known[table]:
-            return f"column '{column.name}' does not exist in {table}. {table} columns: {', '.join(sorted(known[table]))}"
+            owners = [other for other in known if name in known[other]]
+            hint = f" It is a column of {owners[0]}: join {owners[0]} to use it." if owners else ""
+            return f"column '{column.name}' does not exist in {table}.{hint} {table} columns: {', '.join(sorted(known[table]))}"
         if not table and name not in in_query:
             return f"column '{column.name}' is not in any table this query reads ({', '.join(sorted(set(aliases.values())))}). Join the table that has it or use another column."
+
+    # A join on the wrong keys runs fine and returns wrong numbers, so catch it here.
+    def owner(column: exp.Column) -> str | None:
+        """'TABLE.COLUMN' for a key column of a real table, else None."""
+        name = column.name.upper()
+        table = aliases.get(column.table.upper()) or next((t for t in aliases.values() if name in known[t]), None)
+        return f"{table}.{name}" if table and name.endswith("KEY") and name in known[table] else None
+
+    allowed = {frozenset(pair) for pair in schema.JOIN_KEYS}
+    used = set()
+    for equality in tree.find_all(exp.EQ):
+        left, right = equality.this, equality.expression
+        if not (isinstance(left, exp.Column) and isinstance(right, exp.Column)):
+            continue
+        pair = frozenset({owner(left), owner(right)})
+        if None in pair or len({key.split(".")[0] for key in pair}) < 2:
+            continue
+        if pair not in allowed:
+            valid = "; ".join(f"{a} = {b}" for a, b in schema.JOIN_KEYS)
+            return f"wrong join: {' = '.join(sorted(pair))} is not a key relationship. Valid joins: {valid}"
+        used.add(pair)
+
+    # A two-column key joined on one column alone multiplies rows.
+    for first, second in schema.COMPOSITE_KEYS:
+        if (frozenset(first) in used) != (frozenset(second) in used):
+            return (f"incomplete join: {first[0].split('.')[0]} and {first[1].split('.')[0]} must be joined on both "
+                    f"{' = '.join(first)} and {' = '.join(second)}, or not joined at all.")
     return None
 
 
@@ -95,7 +124,7 @@ def run(question: str, *, validation: bool = True, retry: bool = True, limit: in
         error, can_retry = None, True
         if validation:
             error = validate_sql(sql)
-            steps.append(Step(name="validate", status="error" if error else "ok", detail=error or "single SELECT, known tables and columns"))
+            steps.append(Step(name="validate", status="error" if error else "ok", detail=error or "single SELECT, known tables, columns and join keys"))
 
         if error is None:
             try:
