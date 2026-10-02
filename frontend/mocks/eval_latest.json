@@ -1,0 +1,131 @@
+{
+  "generated_at": "2026-10-02T12:00:00Z",
+  "model": "gemma3:4b (MOCK DATA)",
+  "dataset": "SNOWFLAKE_SAMPLE_DATA.TPCH_SF1",
+  "modes": [
+    {
+      "name": "bare",
+      "accuracy": 0.2,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment?",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": false
+        },
+        {
+          "id": "q03",
+          "question": "Which 5 customers spent the most?",
+          "passed": false
+        },
+        {
+          "id": "q04",
+          "question": "What is the total revenue per region?",
+          "passed": false
+        },
+        {
+          "id": "q05",
+          "question": "Which supplier nation ships the most line items late?",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "+schema_grounding",
+      "accuracy": 0.4,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment?",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Which 5 customers spent the most?",
+          "passed": false
+        },
+        {
+          "id": "q04",
+          "question": "What is the total revenue per region?",
+          "passed": false
+        },
+        {
+          "id": "q05",
+          "question": "Which supplier nation ships the most line items late?",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "+validation",
+      "accuracy": 0.6,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment?",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Which 5 customers spent the most?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "What is the total revenue per region?",
+          "passed": false
+        },
+        {
+          "id": "q05",
+          "question": "Which supplier nation ships the most line items late?",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "+retry",
+      "accuracy": 0.8,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "How many customers are in each market segment?",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "How many orders were placed in 1995?",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Which 5 customers spent the most?",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "What is the total revenue per region?",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "Which supplier nation ships the most line items late?",
+          "passed": false
+        }
+      ]
+    }
+  ]
+}

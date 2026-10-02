@@ -1,0 +1,26 @@
+{
+  "mode": "harness",
+  "question": "Which 5 customers spent the most?",
+  "sql": "SELECT c.C_NAME, SUM(o.O_TOTALPRICE) AS TOTAL\nFROM CUSTOMER c\nJOIN ORDERS o ON o.O_CUSTKEY = c.C_CUSTKEY\nGROUP BY c.C_NAME\nORDER BY TOTAL DESC\nLIMIT 5",
+  "columns": ["C_NAME", "TOTAL"],
+  "rows": [
+    ["Customer#000143500", 7012696.48],
+    ["Customer#000095257", 6563511.23],
+    ["Customer#000087115", 6457526.26],
+    ["Customer#000131113", 6311428.86],
+    ["Customer#000103834", 6306524.23]
+  ],
+  "attempts": 2,
+  "latency_ms": 4210,
+  "error": null,
+  "steps": [
+    { "name": "schema_grounding", "status": "ok", "detail": "Loaded 8 tables" },
+    { "name": "generate", "status": "ok", "detail": "attempt 1" },
+    { "name": "validate", "status": "ok", "detail": "single SELECT" },
+    { "name": "execute", "status": "error", "detail": "invalid identifier 'C_TOTAL'" },
+    { "name": "retry", "status": "ok", "detail": "fed error back to model" },
+    { "name": "generate", "status": "ok", "detail": "attempt 2" },
+    { "name": "validate", "status": "ok", "detail": "single SELECT" },
+    { "name": "execute", "status": "ok", "detail": "5 rows" }
+  ]
+}

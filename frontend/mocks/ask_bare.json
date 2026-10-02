@@ -1,0 +1,15 @@
+{
+  "mode": "bare",
+  "question": "Which 5 customers spent the most?",
+  "sql": "SELECT C_NAME, SUM(C_TOTAL) AS TOTAL FROM CUSTOMER GROUP BY C_NAME ORDER BY TOTAL DESC LIMIT 5",
+  "columns": [],
+  "rows": [],
+  "attempts": 1,
+  "latency_ms": 1830,
+  "error": "SQL compilation error: invalid identifier 'C_TOTAL'",
+  "steps": [
+    { "name": "schema_grounding", "status": "ok", "detail": "Loaded 8 tables" },
+    { "name": "generate", "status": "ok", "detail": "attempt 1" },
+    { "name": "execute", "status": "error", "detail": "invalid identifier 'C_TOTAL'" }
+  ]
+}
