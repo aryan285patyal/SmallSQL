@@ -28,6 +28,8 @@ export default function DitherBackground({ theme = 'dark' }) {
         speed={reducedMotion ? 0 : 0.12}
       />
       <div className="absolute inset-0" style={{ background: VEIL }} />
+      {/* light mode only: an even wash over the pattern so foreground elements stand out */}
+      {theme === 'light' && <div className="absolute inset-0 bg-bg/45" />}
       <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-b from-transparent to-bg" />
     </div>
   )

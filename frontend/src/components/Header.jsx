@@ -24,10 +24,12 @@ export default function Header({ tab, tabs, onTab, theme, onToggleTheme }) {
     <header className="mb-8">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
+<a href="#/" aria-label="SmallSQL home" className="block">
           <pre className="hidden text-[9px] leading-[1.05] text-accent glow select-none sm:block" aria-label="SmallSQL">
             {BANNER}
           </pre>
           <h1 className="font-display text-5xl text-accent glow sm:hidden">SmallSQL</h1>
+          </a>
           <p className="mt-2 text-[12px] text-dim">
             a tiny open-weight model, a harness, and proof it works<span className="animate-blink text-accent">_</span>
           </p>
