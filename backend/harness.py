@@ -3,21 +3,160 @@
 This is the core of the project. Every stage appends a Step so the UI can show the loop.
 """
 
+from sqlglot import exp
+
+import config
+import llm
+import prompts
+import schema
+from bare import error_text
 from schemas import AskResponse, Step
+from snowflake_client import parse_select, run_sql
 
 
 def validate_sql(sql: str) -> str | None:
-    """Return None if `sql` is exactly one SELECT over known tables, else an error message.
+    """Return None if `sql` is exactly one SELECT over known tables and columns, else an error message.
 
-    TODO(backend): parse with sqlglot (dialect="snowflake"), reject non-SELECT / multiple
-    statements, reject unknown tables or columns where detectable.
+    The message is written for the model: it names the bad identifier and lists the real columns.
     """
-    raise NotImplementedError("harness.validate_sql")
+    try:
+        tree = parse_select(sql)
+    except ValueError as exc:
+        return str(exc)
+
+    known = schema.columns_by_table()
+    cte_names = {cte.alias_or_name.upper() for cte in tree.find_all(exp.CTE)}
+
+    # alias (or bare table name) -> real table, for checking qualified columns
+    aliases: dict[str, str] = {}
+    for table in tree.find_all(exp.Table):
+        name = table.name.upper()
+        if name in cte_names:
+            continue
+        if name not in known:
+            return f"unknown table '{table.name}'. Available tables: {', '.join(known)}"
+        aliases[table.alias_or_name.upper()] = name
+
+    # names the query defines itself (SELECT aliases, CTE and subquery outputs)
+    defined = {alias.alias.upper() for alias in tree.find_all(exp.Alias)}
+    in_query = set().union(*(known[table] for table in aliases.values()))
+
+    for column in tree.find_all(exp.Column):
+        name, qualifier = column.name.upper(), column.table.upper()
+        if name in defined:
+            continue
+        table = aliases.get(qualifier)
+        if table and name not in known[table]:
+            owners = [other for other in known if name in known[other]]
+            hint = f" It is a column of {owners[0]}: join {owners[0]} to use it." if owners else ""
+            return f"column '{column.name}' does not exist in {table}.{hint} {table} columns: {', '.join(sorted(known[table]))}"
+        if not table and name not in in_query:
+            return f"column '{column.name}' is not in any table this query reads ({', '.join(sorted(set(aliases.values())))}). Join the table that has it or use another column."
+
+    # A join on the wrong keys runs fine and returns wrong numbers, so catch it here.
+    def owner(column: exp.Column) -> str | None:
+        """'TABLE.COLUMN' for a key column of a real table, else None."""
+        name = column.name.upper()
+        table = aliases.get(column.table.upper()) or next((t for t in aliases.values() if name in known[t]), None)
+        return f"{table}.{name}" if table and name.endswith("KEY") and name in known[table] else None
+
+    allowed = {frozenset(pair) for pair in schema.JOIN_KEYS}
+    used = set()
+    for equality in tree.find_all(exp.EQ):
+        left, right = equality.this, equality.expression
+        if not (isinstance(left, exp.Column) and isinstance(right, exp.Column)):
+            continue
+        pair = frozenset({owner(left), owner(right)})
+        if None in pair or len({key.split(".")[0] for key in pair}) < 2:
+            continue
+        if pair not in allowed:
+            valid = "; ".join(f"{a} = {b}" for a, b in schema.JOIN_KEYS)
+            return f"wrong join: {' = '.join(sorted(pair))} is not a key relationship. Valid joins: {valid}"
+        used.add(pair)
+
+    # A two-column key joined on one column alone multiplies rows.
+    for first, second in schema.COMPOSITE_KEYS:
+        if (frozenset(first) in used) != (frozenset(second) in used):
+            return (f"incomplete join: {first[0].split('.')[0]} and {first[1].split('.')[0]} must be joined on both "
+                    f"{' = '.join(first)} and {' = '.join(second)}, or not joined at all.")
+    return None
 
 
-def run(question: str) -> AskResponse:
-    """TODO(backend): up to config.MAX_ATTEMPTS attempts:
-    generate -> validate -> execute; on failure feed prompts.FIX back and loop.
+def critique(question: str, sql: str, columns: list[str], rows: list[list]) -> str | None:
+    """Sanity-check a result that executed. Returns a reason if it looks wrong, else None.
+
+    An empty result usually means a filter value that matches nothing. Asking the model to
+    judge its own answer is off by default: small models reject correct queries too often.
     """
-    steps: list[Step] = []
-    raise NotImplementedError("harness.run")
+    if not rows:
+        return "The query returned no rows. Check the filter values against the sample values."
+    if not config.LLM_CRITIQUE:
+        return None
+    preview = "\n".join([" | ".join(columns)] + [" | ".join(str(cell) for cell in row) for row in rows[:5]])
+    verdict = llm.complete(prompts.CRITIQUE.format(question=question, sql=sql, preview=preview)).strip()
+    return None if verdict.upper().startswith("YES") else verdict
+
+
+def run(question: str, *, validation: bool = True, retry: bool = True, limit: int = config.ROW_LIMIT) -> AskResponse:
+    """Run one question through the harness.
+
+    The two flags exist for the benchmark ablations; the full harness has both on.
+    - validation: check the SQL before running it and feed validation errors back to the model
+    - retry: also feed Snowflake execution errors back, and self-critique the first good result
+    """
+    result = AskResponse(mode="harness", question=question)
+    steps = result.steps
+
+    context = {"schema": schema.get_schema_text(), "notes": schema.get_grounding_notes(), "question": question}
+    steps.append(Step(name="schema_grounding", status="ok", detail=f"Loaded {len(schema.load()['tables'])} tables, join keys and sample values"))
+
+    max_attempts = config.MAX_ATTEMPTS if validation else 1
+    prompt = prompts.GENERATE.format(**context)
+    accepted = None  # a result that executed fine but the critique questioned
+    critiqued = False
+
+    for attempt in range(1, max_attempts + 1):
+        result.attempts = attempt
+        sql = llm.extract_sql(llm.complete(prompt))
+        result.sql = sql
+        steps.append(Step(name="generate", status="ok", detail=f"attempt {attempt}"))
+
+        error, can_retry = None, True
+        if validation:
+            error = validate_sql(sql)
+            steps.append(Step(name="validate", status="error" if error else "ok", detail=error or "single SELECT, known tables, columns and join keys"))
+
+        if error is None:
+            try:
+                columns, rows = run_sql(sql, limit)
+                steps.append(Step(name="execute", status="ok", detail=f"{len(rows)} rows"))
+            except Exception as exc:
+                error, can_retry = error_text(exc), retry
+                steps.append(Step(name="execute", status="error", detail=error))
+
+        if error is None:
+            last_attempt = attempt == max_attempts
+            reason = None
+            if retry and not critiqued and not last_attempt:
+                critiqued = True
+                reason = critique(question, sql, columns, rows)
+                steps.append(Step(name="critique", status="error" if reason else "ok", detail=reason or "result is not empty"))
+            if reason is None:
+                result.columns, result.rows, result.error = columns, rows, None
+                return result
+            accepted = (sql, columns, rows)
+            error = f"The query ran but does not answer the question. {reason}"
+
+        result.error = error
+        if not can_retry or attempt == max_attempts:
+            break
+        steps.append(Step(name="retry", status="ok", detail="fed error back to model"))
+        prompt = prompts.FIX.format(sql=sql, error=error, **context)
+
+    # The critique is only a second opinion: if its retry did not produce a working
+    # query, fall back to the one that ran.
+    if accepted:
+        result.sql, result.columns, result.rows = accepted
+        result.error = None
+        steps.append(Step(name="critique", status="skipped", detail="kept the earlier result that executed"))
+    return result

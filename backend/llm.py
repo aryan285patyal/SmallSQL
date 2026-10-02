@@ -1,25 +1,37 @@
-"""Thin wrapper around Snowflake Cortex COMPLETE so the model is configured in one place.
+"""Thin wrapper around Snowflake Cortex so the model is configured in one place."""
 
-config.CORTEX_MODEL must be an open-weight model of 10B parameters or fewer (hackathon rule).
-"""
+import json
+import re
 
 import config
+import snowflake_client
+
+# The options form of COMPLETE lets us pin temperature to 0 for repeatable benchmark runs.
+_COMPLETE = """SELECT SNOWFLAKE.CORTEX.COMPLETE(
+    %s,
+    ARRAY_CONSTRUCT(OBJECT_CONSTRUCT('role', 'user', 'content', %s)),
+    OBJECT_CONSTRUCT('temperature', 0, 'max_tokens', %s)
+)"""
+
+_FENCED = re.compile(r"```(?:sql)?\s*(.*?)```", re.DOTALL | re.IGNORECASE)
+_STATEMENT = re.compile(r"\b(WITH|SELECT)\b.*", re.DOTALL | re.IGNORECASE)
 
 
 def complete(prompt: str) -> str:
-    """Send a prompt to the Cortex-hosted model and return the raw text reply.
-
-    TODO(backend): on snowflake_client.get_connection(), run
-        SELECT SNOWFLAKE.CORTEX.COMPLETE(%s, %s)   with params (config.CORTEX_MODEL, prompt)
-    and return the single value. Bind the prompt as a parameter; never format it into the SQL.
-    """
-    raise NotImplementedError("llm.complete")
+    """Send a prompt to the model and return the raw text reply."""
+    params = (config.CORTEX_MODEL, prompt, config.LLM_MAX_TOKENS)
+    _, rows = snowflake_client.run_trusted(_COMPLETE, params, timeout=config.LLM_TIMEOUT_S)
+    reply = json.loads(rows[0][0])
+    return reply["choices"][0]["messages"]
 
 
 def extract_sql(text: str) -> str:
     """Strip markdown fences / commentary from a model reply, leaving just the SQL."""
-    text = text.strip()
-    if text.startswith("```"):
-        text = text.split("\n", 1)[1] if "\n" in text else ""
-        text = text.rsplit("```", 1)[0]
-    return text.strip().rstrip(";")
+    fenced = _FENCED.search(text)
+    if fenced:
+        text = fenced.group(1)
+    else:
+        statement = _STATEMENT.search(text)
+        if statement:
+            text = statement.group(0)
+    return text.strip().rstrip(";").strip()

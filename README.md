@@ -8,13 +8,11 @@
 
 ## Model
 
-<!-- TODO: confirm the exact Cortex model name and link its license/terms -->
-
 | | |
 |---|---|
-| Model | `llama3.1-8b` (TODO: confirm) |
-| Served via | [Snowflake Cortex `COMPLETE`](https://docs.snowflake.com/en/sql-reference/functions/complete-snowflake-cortex) |
-| License / terms | TODO: link (Llama 3.1 Community License) |
+| Model | `llama3.1-8b` (Meta Llama 3.1, 8B parameters, open weights) |
+| Served via | [Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql) `COMPLETE`, temperature 0 |
+| License / terms | [Llama 3.1 Community License](https://www.llama.com/llama3_1/license/) |
 
 ## Dataset
 
@@ -43,16 +41,16 @@ SMALLSQL.md  full project spec, including the API contract (Section 5)
 ### 1. Environment
 
 ```bash
-cp .env.example .env   # fill in Snowflake credentials and the model tag
+cp .env.example .env   # fill in Snowflake credentials
 ```
 
-### 2. Model (Snowflake Cortex)
+### 2. Model
 
-The model runs inside Snowflake, so there is nothing to install. The role in `.env` needs Cortex access:
+Nothing to install: the model runs on Snowflake Cortex. The role in `.env` needs Cortex access; then check the model answers in your account:
 
 ```sql
 GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE <your_role>;
-SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-8b', 'Say hi');  -- confirm the model runs in your region
+SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-8b', 'Reply with the single word OK');
 ```
 
 ### 3. Backend
