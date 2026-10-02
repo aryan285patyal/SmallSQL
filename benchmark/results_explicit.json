@@ -1,0 +1,431 @@
+{
+  "generated_at": "2026-10-02T21:22:43Z",
+  "model": "llama3.1-8b",
+  "dataset": "SNOWFLAKE_SAMPLE_DATA.TPCH_SF1",
+  "modes": [
+    {
+      "name": "bare",
+      "accuracy": 0.8,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "passed": false
+        },
+        {
+          "id": "q14",
+          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "passed": false
+        },
+        {
+          "id": "q18",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "passed": false
+        },
+        {
+          "id": "q19",
+          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "passed": false
+        },
+        {
+          "id": "q20",
+          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+schema_grounding",
+      "accuracy": 0.9,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "passed": false
+        },
+        {
+          "id": "q14",
+          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "passed": false
+        },
+        {
+          "id": "q20",
+          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+validation",
+      "accuracy": 0.9,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "passed": false
+        },
+        {
+          "id": "q14",
+          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "passed": false
+        },
+        {
+          "id": "q20",
+          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "+retry",
+      "accuracy": 0.9,
+      "per_question": [
+        {
+          "id": "q01",
+          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q02",
+          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "passed": true
+        },
+        {
+          "id": "q03",
+          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q04",
+          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "passed": true
+        },
+        {
+          "id": "q05",
+          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q06",
+          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q07",
+          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "passed": true
+        },
+        {
+          "id": "q08",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q09",
+          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q10",
+          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "passed": true
+        },
+        {
+          "id": "q11",
+          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q12",
+          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "passed": true
+        },
+        {
+          "id": "q13",
+          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "passed": false
+        },
+        {
+          "id": "q14",
+          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q15",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q16",
+          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "passed": true
+        },
+        {
+          "id": "q17",
+          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "passed": true
+        },
+        {
+          "id": "q18",
+          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "passed": true
+        },
+        {
+          "id": "q19",
+          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "passed": false
+        },
+        {
+          "id": "q20",
+          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

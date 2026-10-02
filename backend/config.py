@@ -30,6 +30,9 @@ MAX_ATTEMPTS = int(os.getenv("MAX_ATTEMPTS", "3"))
 ROW_LIMIT = int(os.getenv("ROW_LIMIT", "100"))
 QUERY_TIMEOUT_S = int(os.getenv("QUERY_TIMEOUT_S", "30"))
 LLM_CRITIQUE = os.getenv("LLM_CRITIQUE", "false").lower() == "true"
+# Self-consistency: the full harness writes this many candidate queries and keeps the majority result.
+VOTE_CANDIDATES = int(os.getenv("VOTE_CANDIDATES", "3"))
+VOTE_TEMPERATURE = float(os.getenv("VOTE_TEMPERATURE", "0.5"))
 
 # Benchmark
 EVAL_WORKERS = int(os.getenv("EVAL_WORKERS", "8"))

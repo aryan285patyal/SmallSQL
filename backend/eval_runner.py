@@ -14,6 +14,7 @@ from pathlib import Path
 import bare
 import config
 import harness
+from compare import results_match
 from snowflake_client import run_sql
 
 LIMIT = config.EVAL_ROW_LIMIT
@@ -25,20 +26,6 @@ MODES = {
     "+validation": lambda q: harness.run(q, retry=False, limit=LIMIT),
     "+retry": lambda q: harness.run(q, limit=LIMIT),
 }
-
-
-def _normalize(rows: list[list], ordered: bool) -> list[tuple]:
-    """Round floats and sort the cells of each row, so column order and names don't matter."""
-    def cell(value):
-        return round(float(value), 2) if isinstance(value, (int, float)) and not isinstance(value, bool) else value
-
-    normalized = [tuple(sorted((cell(value) for value in row), key=repr)) for row in rows]
-    return normalized if ordered else sorted(normalized, key=repr)
-
-
-def results_match(gold: list[list], rows: list[list], ordered: bool = False) -> bool:
-    """Row order only counts when the question asks for a ranking (`"ordered": true`)."""
-    return _normalize(gold, ordered) == _normalize(rows, ordered)
 
 
 def run_benchmark(questions_path: Path = config.QUESTIONS_PATH, results_path: Path = config.RESULTS_PATH) -> None:

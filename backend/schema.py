@@ -40,12 +40,19 @@ COMPOSITE_KEYS = [
     (("LINEITEM.L_PARTKEY", "PARTSUPP.PS_PARTKEY"), ("LINEITEM.L_SUPPKEY", "PARTSUPP.PS_SUPPKEY")),
 ]
 
-_RULES = """Rules:
+_RULES = """Business terms:
+- Revenue is SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)).
+- The value of an order is O_TOTALPRICE. What a customer spent is the sum of O_TOTALPRICE over their orders. C_ACCTBAL is an account balance, not spending.
+- A line item is late when L_SHIPDATE > L_COMMITDATE. It is returned when L_RETURNFLAG = 'R'.
+- Inventory value is PS_SUPPLYCOST * PS_AVAILQTY.
+- An urgent order has O_ORDERPRIORITY = '1-URGENT'; high priority is '2-HIGH'.
+
+Rules:
 - Use only the tables and columns listed above. Never invent a column.
-- Text values are stored exactly as shown in the sample values. Match them exactly.
-- Date columns are DATE type; use YEAR(col) to filter by year. Filter by date only when the question mentions one.
-- Revenue of a line item is L_EXTENDEDPRICE * (1 - L_DISCOUNT).
-- What a customer spent is the sum of O_TOTALPRICE over their orders. C_ACCTBAL is an account balance, not spending.
+- Every column name keeps its table prefix: C_, O_, L_, P_, PS_, S_, N_, R_.
+- Text values are stored exactly as shown in the value lists. Match them exactly.
+- Date columns are DATE type; use YEAR(col) to filter by year.
+- Never add a filter the question does not ask for.
 - Join only the tables the question needs.
 - Select only the columns the question asks for. Never add LIMIT unless the question asks for a top N."""
 
@@ -99,4 +106,4 @@ def get_grounding_notes() -> str:
     """What the harness adds on top of the schema text: join keys, sample values and dialect rules."""
     samples = "\n".join(f"- {column}: {', '.join(values)}" for column, values in load()["samples"].items())
     join_keys = "\n".join(f"- {left} = {right}" for left, right in JOIN_KEYS)
-    return f"Join keys:\n{join_keys}\n\nSample values:\n{samples}\n\n{_RULES}\n"
+    return f"Join keys:\n{join_keys}\n\nValues these columns can take (filter on one only when the question asks for it):\n{samples}\n\n{_RULES}\n"

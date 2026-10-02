@@ -1,428 +1,928 @@
 {
-  "generated_at": "2026-10-02T21:22:43Z",
+  "generated_at": "2026-10-02T22:16:35Z",
   "model": "llama3.1-8b",
   "dataset": "SNOWFLAKE_SAMPLE_DATA.TPCH_SF1",
   "modes": [
     {
       "name": "bare",
-      "accuracy": 0.8,
+      "accuracy": 0.6667,
       "per_question": [
         {
-          "id": "q01",
-          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "id": "p01",
+          "question": "How many customers belong to each market segment? Return the segment and the customer count.",
           "passed": true
         },
         {
-          "id": "q02",
-          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "id": "p02",
+          "question": "What is the average account balance of customers in each market segment? Return the segment and the average balance.",
           "passed": true
         },
         {
-          "id": "q03",
-          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "id": "p03",
+          "question": "What is the total value of all orders in each status? Return the order status and the total value.",
           "passed": true
         },
         {
-          "id": "q04",
-          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "id": "p04",
+          "question": "How many orders fall into each priority level? Return the priority level and the order count.",
           "passed": true
         },
         {
-          "id": "q05",
-          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "id": "p05",
+          "question": "Which ten suppliers have the lowest account balance? Return the supplier name and the account balance, lowest first.",
           "passed": true
         },
         {
-          "id": "q06",
-          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "id": "p06",
+          "question": "What are the total, average, minimum, and maximum quantities across all line items? Return those four values in a single row.",
           "passed": true
         },
         {
-          "id": "q07",
-          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "id": "p07",
+          "question": "How many parts does each manufacturer produce? Return the manufacturer and the part count.",
           "passed": true
         },
         {
-          "id": "q08",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "id": "p08",
+          "question": "What is the total revenue for each return-flag category? Return the return flag and the revenue.",
           "passed": true
         },
         {
-          "id": "q09",
-          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "id": "p09",
+          "question": "How much revenue was generated in each year, based on ship date? Return the year and the revenue.",
           "passed": true
         },
         {
-          "id": "q10",
-          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "id": "p10",
+          "question": "How many orders were placed in each quarter of 1996? Return the quarter number and the order count.",
           "passed": true
         },
         {
-          "id": "q11",
-          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q12",
-          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
-          "passed": true
-        },
-        {
-          "id": "q13",
-          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "id": "p11",
+          "question": "Which five customers spent the most in total across all their orders? Return the customer name and the amount spent, highest first.",
           "passed": false
         },
         {
-          "id": "q14",
-          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "id": "p12",
+          "question": "How many suppliers are based in each nation? Return the nation name and the supplier count.",
           "passed": true
         },
         {
-          "id": "q15",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "id": "p13",
+          "question": "What is the average order value for each customer market segment? Return the segment and the average.",
+          "passed": false
+        },
+        {
+          "id": "p14",
+          "question": "How many line items were shipped in each month of 1997? Return the month number and the count.",
           "passed": true
         },
         {
-          "id": "q16",
-          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "id": "p15",
+          "question": "Which three customers placed the most orders? Return the customer name and the order count, highest first.",
           "passed": true
         },
         {
-          "id": "q17",
-          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "id": "p16",
+          "question": "What percentage of line items were shipped late each year? Return the year and the late-shipment percentage.",
           "passed": false
         },
         {
-          "id": "q18",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "id": "p17",
+          "question": "What is the total quantity ordered for each part brand? Return the brand and the total quantity.",
+          "passed": true
+        },
+        {
+          "id": "p18",
+          "question": "Which five parts generated the most revenue? Return the part name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p19",
+          "question": "What was the revenue for each ship mode during 1995? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p20",
+          "question": "How many distinct customers placed at least one order in each year? Return the year and the customer count.",
           "passed": false
         },
         {
-          "id": "q19",
-          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "id": "p21",
+          "question": "Which five nations have the most customers? Return the nation name and the customer count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p22",
+          "question": "What is the average discount applied to line items shipped in each year? Return the year and the average discount.",
+          "passed": true
+        },
+        {
+          "id": "p23",
+          "question": "Which five suppliers hold the most valuable inventory, measured as cost times available quantity? Return the supplier name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p24",
+          "question": "How many urgent orders were placed each year? Return the year and the count.",
           "passed": false
         },
         {
-          "id": "q20",
-          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "id": "p25",
+          "question": "How many line items belong to orders of each priority level? Return the priority level and the line-item count.",
+          "passed": true
+        },
+        {
+          "id": "p26",
+          "question": "How much revenue did customers in each nation generate? Return the nation name and the revenue, highest revenue first.",
+          "passed": true
+        },
+        {
+          "id": "p27",
+          "question": "Which five nations had the most returned items, counting by the customer's nation? Return the nation name and the return count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p28",
+          "question": "What is the average order value for each world region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "p29",
+          "question": "How much revenue came from customers in the building segment, split by ship mode? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p30",
+          "question": "How many distinct parts are supplied by suppliers in each region? Return the region name and the distinct part count.",
+          "passed": false
+        },
+        {
+          "id": "p31",
+          "question": "Which three nations earned the most revenue from urgent orders? Return the nation name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p32",
+          "question": "How much revenue did each region generate from items shipped in 1996? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p33",
+          "question": "Which five nations have the highest average spending per customer? Return the nation name and the average, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p34",
+          "question": "How many line items were shipped late, grouped by the supplier's nation? Return the nation name and the late-shipment count.",
+          "passed": false
+        },
+        {
+          "id": "p35",
+          "question": "How much revenue did each manufacturer earn from European customers? Return the manufacturer and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p36",
+          "question": "Which five nations have suppliers holding the most valuable inventory? Return the nation name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p37",
+          "question": "What share of total revenue does each region account for? Return the region name and the percentage.",
+          "passed": false
+        },
+        {
+          "id": "p38",
+          "question": "How much did each nation's customers spend on urgent or high-priority orders? Return the nation name and the total spent.",
+          "passed": false
+        },
+        {
+          "id": "p39",
+          "question": "How many orders were placed by customers in each region? Return the region name and the order count.",
+          "passed": false
+        },
+        {
+          "id": "p40",
+          "question": "Which three regions earn the most revenue from items shipped by air? Return the region name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p41",
+          "question": "What is the total revenue attributed to suppliers in each nation? Return the nation name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p42",
+          "question": "Which five parts generated the most revenue from Asian customers? Return the part name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p43",
+          "question": "What is the average revenue per order for each customer nation? Return the nation name and the average.",
+          "passed": false
+        },
+        {
+          "id": "p44",
+          "question": "Which five supplier nations have the most late shipments? Return the nation name and the late count, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p45",
+          "question": "What is the average account balance of suppliers in each region? Return the region name and the average balance.",
           "passed": true
         }
       ]
     },
     {
       "name": "+schema_grounding",
-      "accuracy": 0.9,
+      "accuracy": 0.7111,
       "per_question": [
         {
-          "id": "q01",
-          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "id": "p01",
+          "question": "How many customers belong to each market segment? Return the segment and the customer count.",
           "passed": true
         },
         {
-          "id": "q02",
-          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "id": "p02",
+          "question": "What is the average account balance of customers in each market segment? Return the segment and the average balance.",
           "passed": true
         },
         {
-          "id": "q03",
-          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q04",
-          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
-          "passed": true
-        },
-        {
-          "id": "q05",
-          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q06",
-          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q07",
-          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
-          "passed": true
-        },
-        {
-          "id": "q08",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
-          "passed": true
-        },
-        {
-          "id": "q09",
-          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q10",
-          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
-          "passed": true
-        },
-        {
-          "id": "q11",
-          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
-          "passed": true
-        },
-        {
-          "id": "q12",
-          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
-          "passed": true
-        },
-        {
-          "id": "q13",
-          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "id": "p03",
+          "question": "What is the total value of all orders in each status? Return the order status and the total value.",
           "passed": false
         },
         {
-          "id": "q14",
-          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "id": "p04",
+          "question": "How many orders fall into each priority level? Return the priority level and the order count.",
           "passed": true
         },
         {
-          "id": "q15",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "id": "p05",
+          "question": "Which ten suppliers have the lowest account balance? Return the supplier name and the account balance, lowest first.",
           "passed": true
         },
         {
-          "id": "q16",
-          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "id": "p06",
+          "question": "What are the total, average, minimum, and maximum quantities across all line items? Return those four values in a single row.",
           "passed": true
         },
         {
-          "id": "q17",
-          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "id": "p07",
+          "question": "How many parts does each manufacturer produce? Return the manufacturer and the part count.",
           "passed": true
         },
         {
-          "id": "q18",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "id": "p08",
+          "question": "What is the total revenue for each return-flag category? Return the return flag and the revenue.",
           "passed": true
         },
         {
-          "id": "q19",
-          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "id": "p09",
+          "question": "How much revenue was generated in each year, based on ship date? Return the year and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p10",
+          "question": "How many orders were placed in each quarter of 1996? Return the quarter number and the order count.",
+          "passed": true
+        },
+        {
+          "id": "p11",
+          "question": "Which five customers spent the most in total across all their orders? Return the customer name and the amount spent, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p12",
+          "question": "How many suppliers are based in each nation? Return the nation name and the supplier count.",
+          "passed": true
+        },
+        {
+          "id": "p13",
+          "question": "What is the average order value for each customer market segment? Return the segment and the average.",
+          "passed": true
+        },
+        {
+          "id": "p14",
+          "question": "How many line items were shipped in each month of 1997? Return the month number and the count.",
+          "passed": true
+        },
+        {
+          "id": "p15",
+          "question": "Which three customers placed the most orders? Return the customer name and the order count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p16",
+          "question": "What percentage of line items were shipped late each year? Return the year and the late-shipment percentage.",
+          "passed": true
+        },
+        {
+          "id": "p17",
+          "question": "What is the total quantity ordered for each part brand? Return the brand and the total quantity.",
+          "passed": true
+        },
+        {
+          "id": "p18",
+          "question": "Which five parts generated the most revenue? Return the part name and the revenue, highest first.",
           "passed": false
         },
         {
-          "id": "q20",
-          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "id": "p19",
+          "question": "What was the revenue for each ship mode during 1995? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p20",
+          "question": "How many distinct customers placed at least one order in each year? Return the year and the customer count.",
+          "passed": false
+        },
+        {
+          "id": "p21",
+          "question": "Which five nations have the most customers? Return the nation name and the customer count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p22",
+          "question": "What is the average discount applied to line items shipped in each year? Return the year and the average discount.",
+          "passed": false
+        },
+        {
+          "id": "p23",
+          "question": "Which five suppliers hold the most valuable inventory, measured as cost times available quantity? Return the supplier name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p24",
+          "question": "How many urgent orders were placed each year? Return the year and the count.",
+          "passed": true
+        },
+        {
+          "id": "p25",
+          "question": "How many line items belong to orders of each priority level? Return the priority level and the line-item count.",
+          "passed": true
+        },
+        {
+          "id": "p26",
+          "question": "How much revenue did customers in each nation generate? Return the nation name and the revenue, highest revenue first.",
+          "passed": true
+        },
+        {
+          "id": "p27",
+          "question": "Which five nations had the most returned items, counting by the customer's nation? Return the nation name and the return count, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p28",
+          "question": "What is the average order value for each world region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "p29",
+          "question": "How much revenue came from customers in the building segment, split by ship mode? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p30",
+          "question": "How many distinct parts are supplied by suppliers in each region? Return the region name and the distinct part count.",
+          "passed": false
+        },
+        {
+          "id": "p31",
+          "question": "Which three nations earned the most revenue from urgent orders? Return the nation name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p32",
+          "question": "How much revenue did each region generate from items shipped in 1996? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p33",
+          "question": "Which five nations have the highest average spending per customer? Return the nation name and the average, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p34",
+          "question": "How many line items were shipped late, grouped by the supplier's nation? Return the nation name and the late-shipment count.",
+          "passed": false
+        },
+        {
+          "id": "p35",
+          "question": "How much revenue did each manufacturer earn from European customers? Return the manufacturer and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p36",
+          "question": "Which five nations have suppliers holding the most valuable inventory? Return the nation name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p37",
+          "question": "What share of total revenue does each region account for? Return the region name and the percentage.",
+          "passed": true
+        },
+        {
+          "id": "p38",
+          "question": "How much did each nation's customers spend on urgent or high-priority orders? Return the nation name and the total spent.",
+          "passed": true
+        },
+        {
+          "id": "p39",
+          "question": "How many orders were placed by customers in each region? Return the region name and the order count.",
+          "passed": true
+        },
+        {
+          "id": "p40",
+          "question": "Which three regions earn the most revenue from items shipped by air? Return the region name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p41",
+          "question": "What is the total revenue attributed to suppliers in each nation? Return the nation name and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p42",
+          "question": "Which five parts generated the most revenue from Asian customers? Return the part name and the revenue, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p43",
+          "question": "What is the average revenue per order for each customer nation? Return the nation name and the average.",
+          "passed": false
+        },
+        {
+          "id": "p44",
+          "question": "Which five supplier nations have the most late shipments? Return the nation name and the late count, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p45",
+          "question": "What is the average account balance of suppliers in each region? Return the region name and the average balance.",
           "passed": true
         }
       ]
     },
     {
       "name": "+validation",
-      "accuracy": 0.9,
+      "accuracy": 0.7778,
       "per_question": [
         {
-          "id": "q01",
-          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "id": "p01",
+          "question": "How many customers belong to each market segment? Return the segment and the customer count.",
           "passed": true
         },
         {
-          "id": "q02",
-          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "id": "p02",
+          "question": "What is the average account balance of customers in each market segment? Return the segment and the average balance.",
           "passed": true
         },
         {
-          "id": "q03",
-          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "id": "p03",
+          "question": "What is the total value of all orders in each status? Return the order status and the total value.",
           "passed": true
         },
         {
-          "id": "q04",
-          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "id": "p04",
+          "question": "How many orders fall into each priority level? Return the priority level and the order count.",
           "passed": true
         },
         {
-          "id": "q05",
-          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "id": "p05",
+          "question": "Which ten suppliers have the lowest account balance? Return the supplier name and the account balance, lowest first.",
           "passed": true
         },
         {
-          "id": "q06",
-          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "id": "p06",
+          "question": "What are the total, average, minimum, and maximum quantities across all line items? Return those four values in a single row.",
           "passed": true
         },
         {
-          "id": "q07",
-          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "id": "p07",
+          "question": "How many parts does each manufacturer produce? Return the manufacturer and the part count.",
           "passed": true
         },
         {
-          "id": "q08",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "id": "p08",
+          "question": "What is the total revenue for each return-flag category? Return the return flag and the revenue.",
           "passed": true
         },
         {
-          "id": "q09",
-          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "id": "p09",
+          "question": "How much revenue was generated in each year, based on ship date? Return the year and the revenue.",
           "passed": true
         },
         {
-          "id": "q10",
-          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "id": "p10",
+          "question": "How many orders were placed in each quarter of 1996? Return the quarter number and the order count.",
           "passed": true
         },
         {
-          "id": "q11",
-          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "id": "p11",
+          "question": "Which five customers spent the most in total across all their orders? Return the customer name and the amount spent, highest first.",
           "passed": true
         },
         {
-          "id": "q12",
-          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "id": "p12",
+          "question": "How many suppliers are based in each nation? Return the nation name and the supplier count.",
           "passed": true
         },
         {
-          "id": "q13",
-          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "id": "p13",
+          "question": "What is the average order value for each customer market segment? Return the segment and the average.",
+          "passed": true
+        },
+        {
+          "id": "p14",
+          "question": "How many line items were shipped in each month of 1997? Return the month number and the count.",
+          "passed": true
+        },
+        {
+          "id": "p15",
+          "question": "Which three customers placed the most orders? Return the customer name and the order count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p16",
+          "question": "What percentage of line items were shipped late each year? Return the year and the late-shipment percentage.",
           "passed": false
         },
         {
-          "id": "q14",
-          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "id": "p17",
+          "question": "What is the total quantity ordered for each part brand? Return the brand and the total quantity.",
           "passed": true
         },
         {
-          "id": "q15",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "id": "p18",
+          "question": "Which five parts generated the most revenue? Return the part name and the revenue, highest first.",
           "passed": true
         },
         {
-          "id": "q16",
-          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "id": "p19",
+          "question": "What was the revenue for each ship mode during 1995? Return the ship mode and the revenue.",
           "passed": true
         },
         {
-          "id": "q17",
-          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
-          "passed": true
-        },
-        {
-          "id": "q18",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
-          "passed": true
-        },
-        {
-          "id": "q19",
-          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "id": "p20",
+          "question": "How many distinct customers placed at least one order in each year? Return the year and the customer count.",
           "passed": false
         },
         {
-          "id": "q20",
-          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "id": "p21",
+          "question": "Which five nations have the most customers? Return the nation name and the customer count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p22",
+          "question": "What is the average discount applied to line items shipped in each year? Return the year and the average discount.",
+          "passed": false
+        },
+        {
+          "id": "p23",
+          "question": "Which five suppliers hold the most valuable inventory, measured as cost times available quantity? Return the supplier name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p24",
+          "question": "How many urgent orders were placed each year? Return the year and the count.",
+          "passed": true
+        },
+        {
+          "id": "p25",
+          "question": "How many line items belong to orders of each priority level? Return the priority level and the line-item count.",
+          "passed": true
+        },
+        {
+          "id": "p26",
+          "question": "How much revenue did customers in each nation generate? Return the nation name and the revenue, highest revenue first.",
+          "passed": true
+        },
+        {
+          "id": "p27",
+          "question": "Which five nations had the most returned items, counting by the customer's nation? Return the nation name and the return count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p28",
+          "question": "What is the average order value for each world region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "p29",
+          "question": "How much revenue came from customers in the building segment, split by ship mode? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p30",
+          "question": "How many distinct parts are supplied by suppliers in each region? Return the region name and the distinct part count.",
+          "passed": false
+        },
+        {
+          "id": "p31",
+          "question": "Which three nations earned the most revenue from urgent orders? Return the nation name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p32",
+          "question": "How much revenue did each region generate from items shipped in 1996? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p33",
+          "question": "Which five nations have the highest average spending per customer? Return the nation name and the average, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p34",
+          "question": "How many line items were shipped late, grouped by the supplier's nation? Return the nation name and the late-shipment count.",
+          "passed": false
+        },
+        {
+          "id": "p35",
+          "question": "How much revenue did each manufacturer earn from European customers? Return the manufacturer and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p36",
+          "question": "Which five nations have suppliers holding the most valuable inventory? Return the nation name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p37",
+          "question": "What share of total revenue does each region account for? Return the region name and the percentage.",
+          "passed": true
+        },
+        {
+          "id": "p38",
+          "question": "How much did each nation's customers spend on urgent or high-priority orders? Return the nation name and the total spent.",
+          "passed": true
+        },
+        {
+          "id": "p39",
+          "question": "How many orders were placed by customers in each region? Return the region name and the order count.",
+          "passed": true
+        },
+        {
+          "id": "p40",
+          "question": "Which three regions earn the most revenue from items shipped by air? Return the region name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p41",
+          "question": "What is the total revenue attributed to suppliers in each nation? Return the nation name and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p42",
+          "question": "Which five parts generated the most revenue from Asian customers? Return the part name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p43",
+          "question": "What is the average revenue per order for each customer nation? Return the nation name and the average.",
+          "passed": false
+        },
+        {
+          "id": "p44",
+          "question": "Which five supplier nations have the most late shipments? Return the nation name and the late count, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p45",
+          "question": "What is the average account balance of suppliers in each region? Return the region name and the average balance.",
           "passed": true
         }
       ]
     },
     {
       "name": "+retry",
-      "accuracy": 0.9,
+      "accuracy": 0.8,
       "per_question": [
         {
-          "id": "q01",
-          "question": "Return the count of customers in each market segment. Return columns: C_MKTSEGMENT, CUSTOMER_COUNT.",
+          "id": "p01",
+          "question": "How many customers belong to each market segment? Return the segment and the customer count.",
           "passed": true
         },
         {
-          "id": "q02",
-          "question": "List all regions with their region key and name, ordered by region key. Return columns: R_REGIONKEY, R_NAME.",
+          "id": "p02",
+          "question": "What is the average account balance of customers in each market segment? Return the segment and the average balance.",
           "passed": true
         },
         {
-          "id": "q03",
-          "question": "Return the number of orders for each order status. Return columns: O_ORDERSTATUS, ORDER_COUNT.",
+          "id": "p03",
+          "question": "What is the total value of all orders in each status? Return the order status and the total value.",
           "passed": true
         },
         {
-          "id": "q04",
-          "question": "Find the 10 parts with the highest retail price. Break ties by ascending part key. Return columns: P_PARTKEY, P_NAME, P_RETAILPRICE.",
+          "id": "p04",
+          "question": "How many orders fall into each priority level? Return the priority level and the order count.",
           "passed": true
         },
         {
-          "id": "q05",
-          "question": "Return the count of parts for each manufacturer. Return columns: P_MFGR, PART_COUNT.",
+          "id": "p05",
+          "question": "Which ten suppliers have the lowest account balance? Return the supplier name and the account balance, lowest first.",
           "passed": true
         },
         {
-          "id": "q06",
-          "question": "Return the total number of line items for each ship mode. Return columns: L_SHIPMODE, LINEITEM_COUNT.",
+          "id": "p06",
+          "question": "What are the total, average, minimum, and maximum quantities across all line items? Return those four values in a single row.",
           "passed": true
         },
         {
-          "id": "q07",
-          "question": "Find the 3 suppliers with the highest account balance. Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, S_ACCTBAL.",
+          "id": "p07",
+          "question": "How many parts does each manufacturer produce? Return the manufacturer and the part count.",
           "passed": true
         },
         {
-          "id": "q08",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for each ship year derived from L_SHIPDATE. Return columns: SHIP_YEAR, REVENUE.",
+          "id": "p08",
+          "question": "What is the total revenue for each return-flag category? Return the return flag and the revenue.",
           "passed": true
         },
         {
-          "id": "q09",
-          "question": "Return the number of orders placed in each month of the year 1995. Return columns: ORDER_MONTH, ORDER_COUNT.",
+          "id": "p09",
+          "question": "How much revenue was generated in each year, based on ship date? Return the year and the revenue.",
           "passed": true
         },
         {
-          "id": "q10",
-          "question": "Find the 5 customers who spent the most across all their orders (sum of O_TOTALPRICE). Break ties by ascending customer key. Return columns: C_CUSTKEY, C_NAME, TOTAL_SPENT.",
+          "id": "p10",
+          "question": "How many orders were placed in each quarter of 1996? Return the quarter number and the order count.",
           "passed": true
         },
         {
-          "id": "q11",
-          "question": "Return the number of suppliers in each nation. Return columns: N_NAME, SUPPLIER_COUNT.",
+          "id": "p11",
+          "question": "Which five customers spent the most in total across all their orders? Return the customer name and the amount spent, highest first.",
           "passed": true
         },
         {
-          "id": "q12",
-          "question": "Return the average order total price per customer market segment. Return columns: C_MKTSEGMENT, AVG_ORDER_TOTAL.",
+          "id": "p12",
+          "question": "How many suppliers are based in each nation? Return the nation name and the supplier count.",
           "passed": true
         },
         {
-          "id": "q13",
-          "question": "Count the number of line items shipped after their commit date, grouped by ship year (from L_SHIPDATE). Return columns: SHIP_YEAR, LATE_COUNT.",
+          "id": "p13",
+          "question": "What is the average order value for each customer market segment? Return the segment and the average.",
+          "passed": true
+        },
+        {
+          "id": "p14",
+          "question": "How many line items were shipped in each month of 1997? Return the month number and the count.",
+          "passed": true
+        },
+        {
+          "id": "p15",
+          "question": "Which three customers placed the most orders? Return the customer name and the order count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p16",
+          "question": "What percentage of line items were shipped late each year? Return the year and the late-shipment percentage.",
           "passed": false
         },
         {
-          "id": "q14",
-          "question": "Find the 5 suppliers with the highest total inventory value (sum of PS_SUPPLYCOST times PS_AVAILQTY from PARTSUPP). Break ties by ascending supplier key. Return columns: S_SUPPKEY, S_NAME, TOTAL_VALUE.",
+          "id": "p17",
+          "question": "What is the total quantity ordered for each part brand? Return the brand and the total quantity.",
           "passed": true
         },
         {
-          "id": "q15",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) per customer nation, ordered by revenue descending. Return columns: NATION, REVENUE.",
+          "id": "p18",
+          "question": "Which five parts generated the most revenue? Return the part name and the revenue, highest first.",
           "passed": true
         },
         {
-          "id": "q16",
-          "question": "Find the 5 nations with the most returned line items (L_RETURNFLAG equals 'R'), joining through orders and customers. Break ties by ascending nation name. Return columns: N_NAME, RETURN_COUNT.",
+          "id": "p19",
+          "question": "What was the revenue for each ship mode during 1995? Return the ship mode and the revenue.",
           "passed": true
         },
         {
-          "id": "q17",
-          "question": "Return the average order total price per region. Return columns: REGION, AVG_ORDER_VALUE.",
+          "id": "p20",
+          "question": "How many distinct customers placed at least one order in each year? Return the year and the customer count.",
           "passed": true
         },
         {
-          "id": "q18",
-          "question": "Compute the total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) for customers in the BUILDING market segment, grouped by ship mode. Return columns: L_SHIPMODE, REVENUE.",
+          "id": "p21",
+          "question": "Which five nations have the most customers? Return the nation name and the customer count, highest first.",
           "passed": true
         },
         {
-          "id": "q19",
-          "question": "Return the count of distinct parts supplied by suppliers in each region. Return columns: REGION, DISTINCT_PARTS.",
+          "id": "p22",
+          "question": "What is the average discount applied to line items shipped in each year? Return the year and the average discount.",
           "passed": false
         },
         {
-          "id": "q20",
-          "question": "Find the 3 nations with the highest total revenue (sum of L_EXTENDEDPRICE times one minus L_DISCOUNT) from orders with priority '1-URGENT'. Break ties by ascending nation name. Return columns: N_NAME, REVENUE.",
+          "id": "p23",
+          "question": "Which five suppliers hold the most valuable inventory, measured as cost times available quantity? Return the supplier name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p24",
+          "question": "How many urgent orders were placed each year? Return the year and the count.",
+          "passed": true
+        },
+        {
+          "id": "p25",
+          "question": "How many line items belong to orders of each priority level? Return the priority level and the line-item count.",
+          "passed": true
+        },
+        {
+          "id": "p26",
+          "question": "How much revenue did customers in each nation generate? Return the nation name and the revenue, highest revenue first.",
+          "passed": true
+        },
+        {
+          "id": "p27",
+          "question": "Which five nations had the most returned items, counting by the customer's nation? Return the nation name and the return count, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p28",
+          "question": "What is the average order value for each world region? Return the region name and the average.",
+          "passed": true
+        },
+        {
+          "id": "p29",
+          "question": "How much revenue came from customers in the building segment, split by ship mode? Return the ship mode and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p30",
+          "question": "How many distinct parts are supplied by suppliers in each region? Return the region name and the distinct part count.",
+          "passed": false
+        },
+        {
+          "id": "p31",
+          "question": "Which three nations earned the most revenue from urgent orders? Return the nation name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p32",
+          "question": "How much revenue did each region generate from items shipped in 1996? Return the region name and the revenue.",
+          "passed": true
+        },
+        {
+          "id": "p33",
+          "question": "Which five nations have the highest average spending per customer? Return the nation name and the average, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p34",
+          "question": "How many line items were shipped late, grouped by the supplier's nation? Return the nation name and the late-shipment count.",
+          "passed": false
+        },
+        {
+          "id": "p35",
+          "question": "How much revenue did each manufacturer earn from European customers? Return the manufacturer and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p36",
+          "question": "Which five nations have suppliers holding the most valuable inventory? Return the nation name and the total inventory value, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p37",
+          "question": "What share of total revenue does each region account for? Return the region name and the percentage.",
+          "passed": true
+        },
+        {
+          "id": "p38",
+          "question": "How much did each nation's customers spend on urgent or high-priority orders? Return the nation name and the total spent.",
+          "passed": true
+        },
+        {
+          "id": "p39",
+          "question": "How many orders were placed by customers in each region? Return the region name and the order count.",
+          "passed": true
+        },
+        {
+          "id": "p40",
+          "question": "Which three regions earn the most revenue from items shipped by air? Return the region name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p41",
+          "question": "What is the total revenue attributed to suppliers in each nation? Return the nation name and the revenue.",
+          "passed": false
+        },
+        {
+          "id": "p42",
+          "question": "Which five parts generated the most revenue from Asian customers? Return the part name and the revenue, highest first.",
+          "passed": true
+        },
+        {
+          "id": "p43",
+          "question": "What is the average revenue per order for each customer nation? Return the nation name and the average.",
+          "passed": false
+        },
+        {
+          "id": "p44",
+          "question": "Which five supplier nations have the most late shipments? Return the nation name and the late count, highest first.",
+          "passed": false
+        },
+        {
+          "id": "p45",
+          "question": "What is the average account balance of suppliers in each region? Return the region name and the average balance.",
           "passed": true
         }
       ]

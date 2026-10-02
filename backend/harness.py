@@ -1,7 +1,10 @@
-"""The harness: schema grounding -> generate -> validate -> execute -> retry with feedback.
+"""The harness: schema grounding -> generate -> validate -> execute -> retry with feedback -> vote.
 
 This is the core of the project. Every stage appends a Step so the UI can show the loop.
 """
+
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 
 from sqlglot import exp
 
@@ -10,6 +13,7 @@ import llm
 import prompts
 import schema
 from bare import error_text
+from compare import normalize
 from schemas import AskResponse, Step
 from snowflake_client import parse_select, run_sql
 
@@ -41,17 +45,32 @@ def validate_sql(sql: str) -> str | None:
     defined = {alias.alias.upper() for alias in tree.find_all(exp.Alias)}
     in_query = set().union(*(known[table] for table in aliases.values()))
 
+    # Report every bad column at once, with the closest real name, so one retry can fix them all.
+    problems = []
     for column in tree.find_all(exp.Column):
         name, qualifier = column.name.upper(), column.table.upper()
         if name in defined:
             continue
         table = aliases.get(qualifier)
-        if table and name not in known[table]:
-            owners = [other for other in known if name in known[other]]
-            hint = f" It is a column of {owners[0]}: join {owners[0]} to use it." if owners else ""
-            return f"column '{column.name}' does not exist in {table}.{hint} {table} columns: {', '.join(sorted(known[table]))}"
-        if not table and name not in in_query:
-            return f"column '{column.name}' is not in any table this query reads ({', '.join(sorted(set(aliases.values())))}). Join the table that has it or use another column."
+        if (table and name in known[table]) or (not table and name in in_query):
+            continue
+        if not name:
+            continue
+        owners = [other for other in known if name in known[other]]
+        guesses = sorted(c for t in ([table] if table else aliases.values()) for c in known[t] if c.endswith("_" + name))
+        if guesses:
+            hint = f"did you mean {guesses[0]}?"
+        elif owners:
+            hint = f"it is a column of {owners[0]}: join {owners[0]} to use it."
+        elif similar := sorted(f"{t}.{c}" for t in known for c in known[t] if "_" in name and c.split("_", 1)[1] == name.split("_", 1)[1]):
+            hint = f"similar columns: {', '.join(similar)}. Join through the table that has it."
+        else:
+            hint = f"{table} columns: {', '.join(sorted(known[table]))}" if table else "use only columns from the schema."
+        problem = f"column '{column.name}' does not exist in {table or 'the tables this query reads'}; {hint}"
+        if problem not in problems:
+            problems.append(problem)
+    if problems:
+        return " | ".join(problems[:8])
 
     # A join on the wrong keys runs fine and returns wrong numbers, so catch it here.
     def owner(column: exp.Column) -> str | None:
@@ -89,7 +108,7 @@ def critique(question: str, sql: str, columns: list[str], rows: list[list]) -> s
     judge its own answer is off by default: small models reject correct queries too often.
     """
     if not rows:
-        return "The query returned no rows. Check the filter values against the sample values."
+        return "The query returned no rows. Check the filter values against the value lists."
     if not config.LLM_CRITIQUE:
         return None
     preview = "\n".join([" | ".join(columns)] + [" | ".join(str(cell) for cell in row) for row in rows[:5]])
@@ -102,8 +121,37 @@ def run(question: str, *, validation: bool = True, retry: bool = True, limit: in
 
     The two flags exist for the benchmark ablations; the full harness has both on.
     - validation: check the SQL before running it and feed validation errors back to the model
-    - retry: also feed Snowflake execution errors back, and self-critique the first good result
+    - retry: also feed Snowflake execution errors back, sanity-check the result, and vote
     """
+    if not retry or config.VOTE_CANDIDATES < 2:
+        return _solve(question, validation=validation, retry=retry, limit=limit)
+
+    # Self-consistency vote. A query that runs can still answer the wrong question, and no
+    # check on a single query can see that. So write several candidates in parallel (the
+    # first at temperature 0, the rest warmer for variety) and keep the result most agree on.
+    temperatures = [0.0] + [config.VOTE_TEMPERATURE] * (config.VOTE_CANDIDATES - 1)
+    with ThreadPoolExecutor(len(temperatures)) as pool:
+        candidates = list(pool.map(lambda t: _solve(question, validation=True, retry=True, limit=limit, temperature=t), temperatures))
+
+    primary = candidates[0]
+    answered = [c for c in candidates if c.error is None]
+    if not answered:
+        return primary
+    votes = Counter(repr(normalize(c.rows)) for c in answered)
+    top, count = votes.most_common(1)[0]
+    # The temperature-0 candidate wins ties.
+    winner = primary if primary.error is None and votes[repr(normalize(primary.rows))] == count else next(c for c in answered if repr(normalize(c.rows)) == top)
+
+    detail = f"{count} of {len(candidates)} candidates agree"
+    if winner is not primary:
+        primary.sql, primary.columns, primary.rows, primary.error = winner.sql, winner.columns, winner.rows, None
+        detail += "; replaced the first candidate's answer"
+    primary.steps.append(Step(name="vote", status="ok", detail=detail))
+    return primary
+
+
+def _solve(question: str, *, validation: bool, retry: bool, limit: int, temperature: float = 0.0) -> AskResponse:
+    """One candidate: generate -> validate -> execute, feeding errors back for up to MAX_ATTEMPTS."""
     result = AskResponse(mode="harness", question=question)
     steps = result.steps
 
@@ -117,7 +165,7 @@ def run(question: str, *, validation: bool = True, retry: bool = True, limit: in
 
     for attempt in range(1, max_attempts + 1):
         result.attempts = attempt
-        sql = llm.extract_sql(llm.complete(prompt))
+        sql = llm.extract_sql(llm.complete(prompt, temperature))
         result.sql = sql
         steps.append(Step(name="generate", status="ok", detail=f"attempt {attempt}"))
 

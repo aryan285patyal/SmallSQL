@@ -6,20 +6,20 @@ import re
 import config
 import snowflake_client
 
-# The options form of COMPLETE lets us pin temperature to 0 for repeatable benchmark runs.
+# The options form of COMPLETE lets us set the temperature: 0 by default for repeatable runs.
 _COMPLETE = """SELECT SNOWFLAKE.CORTEX.COMPLETE(
     %s,
     ARRAY_CONSTRUCT(OBJECT_CONSTRUCT('role', 'user', 'content', %s)),
-    OBJECT_CONSTRUCT('temperature', 0, 'max_tokens', %s)
+    OBJECT_CONSTRUCT('temperature', %s, 'max_tokens', %s)
 )"""
 
 _FENCED = re.compile(r"```(?:sql)?\s*(.*?)```", re.DOTALL | re.IGNORECASE)
 _STATEMENT = re.compile(r"\b(WITH|SELECT)\b.*", re.DOTALL | re.IGNORECASE)
 
 
-def complete(prompt: str) -> str:
+def complete(prompt: str, temperature: float = 0.0) -> str:
     """Send a prompt to the model and return the raw text reply."""
-    params = (config.CORTEX_MODEL, prompt, config.LLM_MAX_TOKENS)
+    params = (config.CORTEX_MODEL, prompt, temperature, config.LLM_MAX_TOKENS)
     _, rows = snowflake_client.run_trusted(_COMPLETE, params, timeout=config.LLM_TIMEOUT_S)
     reply = json.loads(rows[0][0])
     return reply["choices"][0]["messages"]
