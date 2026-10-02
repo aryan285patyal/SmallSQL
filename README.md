@@ -8,13 +8,13 @@
 
 ## Model
 
-<!-- TODO: exact model tag (from `ollama list`) and a link to its license/terms -->
+<!-- TODO: confirm the exact Cortex model name and link its license/terms -->
 
 | | |
 |---|---|
-| Model | `gemma3:4b` (TODO: confirm) |
-| Served via | [Ollama](https://ollama.com) |
-| License / terms | TODO: link |
+| Model | `llama3.1-8b` (TODO: confirm) |
+| Served via | [Snowflake Cortex `COMPLETE`](https://docs.snowflake.com/en/sql-reference/functions/complete-snowflake-cortex) |
+| License / terms | TODO: link (Llama 3.1 Community License) |
 
 ## Dataset
 
@@ -26,7 +26,7 @@
 
 ## Key dependencies
 
-- Backend: Python 3.11+, FastAPI, snowflake-connector-python, ollama, sqlglot
+- Backend: Python 3.11+, FastAPI, snowflake-connector-python, sqlglot
 - Frontend: React, Vite, Tailwind CSS, Recharts
 
 ## Repo layout
@@ -46,12 +46,13 @@ SMALLSQL.md  full project spec, including the API contract (Section 5)
 cp .env.example .env   # fill in Snowflake credentials and the model tag
 ```
 
-### 2. Model
+### 2. Model (Snowflake Cortex)
 
-```bash
-# install Ollama from https://ollama.com, then:
-ollama pull gemma3:4b
-ollama list            # confirm the exact tag and put it in .env
+The model runs inside Snowflake, so there is nothing to install. The role in `.env` needs Cortex access:
+
+```sql
+GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE <your_role>;
+SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-8b', 'Say hi');  -- confirm the model runs in your region
 ```
 
 ### 3. Backend

@@ -8,9 +8,8 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT / ".env")
 
-# Model
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:4b")
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+# Model (Snowflake Cortex COMPLETE, open-weight only)
+CORTEX_MODEL = os.getenv("CORTEX_MODEL", "llama3.1-8b")
 
 # Snowflake
 SNOWFLAKE = {
